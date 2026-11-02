@@ -1,0 +1,537 @@
+{
+ "iso": "2026-11-02",
+ "date": "2026年11月2日(月)",
+ "no": 1,
+ "time": "朝5時刊　試し刷り",
+ "pages": [
+  {
+   "tab": "総合",
+   "title": "総合",
+   "blocks": [
+    {
+     "type": "article",
+     "rank": "top",
+     "kicker": "日本シリーズ",
+     "h": "ソフトバンク4連勝、2年連続の日本一",
+     "sub": "3試合続けて逆転勝ち、柳田が決勝打",
+     "lede": "プロ野球の日本シリーズ第4戦が28日、みずほPayPayドーム福岡で行われ、ソフトバンクがDeNAを4-2で破った。4連勝でシリーズを制し、2年連続13度目の日本一となった。",
+     "body": [
+      "この日も先にリードを許したが、ソフトバンクは3試合続けての逆転勝ちで締めくくった。山本祐大が3打点を挙げ、柳田が決勝打を放った。",
+      "2024年の日本シリーズでは同じDeNAに敗れて日本一を逃していた。2年前の相手に4連勝で雪辱を果たした形だ。昨年は阪神を4勝1敗で破り、5年ぶり12度目の日本一に輝いている。"
+     ],
+     "src": [
+      {
+       "t": "ベースボールチャンネル",
+       "u": "https://www.baseballchannel.jp/npb/299051/",
+       "d": "10/28"
+      }
+     ]
+    },
+    {
+     "type": "article",
+     "rank": "sub",
+     "kicker": "AI",
+     "h": "Gemini 4 Argon、長い仕事に強い新モデル",
+     "lede": "Googleは10月14日、新しいAIモデル「Gemini 4 Argon」の提供を始めた。",
+     "body": [
+      "複雑な作業や長時間にわたる業務を得意とするモデルで、GeminiアプリのUltra・Proの利用者と、開発者向けのAPIで使える。詳しくは3面に。"
+     ],
+     "src": [
+      {
+       "t": "Business Insider Japan",
+       "u": "https://www.businessinsider.jp/article/2610-how-much-did-major-generative-ai-service-fees/"
+      }
+     ]
+    },
+    {
+     "type": "article",
+     "rank": "mid",
+     "kicker": "ベルギー",
+     "h": "ブリュッセルに現代美術の新拠点",
+     "body": [
+      "旧工場を改装した「KANAL-ポンピドゥー・センター」が、2026年末に開館する予定だ。Euronewsは2026年に訪れたい欧州の街の一つにブリュッセルを挙げ、その理由にこの美術館を紹介している。"
+     ],
+     "src": [
+      {
+       "t": "Euronews",
+       "u": "https://euronews.com/2025/12/29/peak-northern-lights-and-stunning-hikes-the-unmissable-european-places-to-visit-in-2026"
+      }
+     ]
+    },
+    {
+     "type": "article",
+     "rank": "mid",
+     "kicker": "北海道",
+     "h": "21日に新規就農フェア",
+     "body": [
+      "北海道が主催する、新しく農業を始めたい人向けの相談イベントが11月21日（土）に開かれる。道内の市町村などが出展する。"
+     ],
+     "src": [
+      {
+       "t": "北海道庁",
+       "u": "https://www.pref.hokkaido.lg.jp/ns/gjf/docs/"
+      }
+     ]
+    },
+    {
+     "type": "column",
+     "body": [
+      "新聞の題字に「明日葉」を選んだ。房総や伊豆の海辺に生える野草で、今日摘んでも明日には新しい芽が出る、と言われるほど育ちが早い。名前の由来もそこにあるらしい。",
+      "朝刊というものは、読み終わるころにはもう古い。それでも毎朝、新しい一枚が届く。昨日のうちに起きたことから、明るいもの、心が少し上を向くものを選んで並べる。それがこの紙面の約束である。",
+      "暗いニュースがないふりをするわけではない。ただ、朝いちばんに読むものくらいは、自分で選んでいいと思う。悪い知らせを明るく書き換えることはしない。良い知らせを、きちんと探して載せる。",
+      "きょうは試し刷りの第1号。紙面はまだ若い芽で、記事の量も足りない。それでも明日の朝5時、また一枚が芽吹く。（ゆ）"
+     ]
+    }
+   ]
+  },
+  {
+   "tab": "スポーツ",
+   "title": "スポーツ",
+   "blocks": [
+    {
+     "type": "article",
+     "rank": "top",
+     "kicker": "日本シリーズ第3戦",
+     "h": "正木、延長10回にサヨナラ弾",
+     "sub": "9回2死から牧原が同点打、3試合続けて逆転",
+     "lede": "27日、みずほPayPayドーム福岡で行われた第3戦は、ソフトバンクが2-1でDeNAにサヨナラ勝ちした。",
+     "body": [
+      "ソフトバンクの先発は今季12勝の松本晴、DeNAは東克樹。両投手の投げ合いで試合は引き締まった。DeNAは5回、古市の中前打で1点を先制した。",
+      "1点を追うソフトバンクは9回2死から牧原が適時打を放って追いつき、延長10回に正木がサヨナラ本塁打を放った。"
+     ],
+     "src": [
+      {
+       "t": "ベースボールチャンネル",
+       "u": "https://www.baseballchannel.jp/npb/298845/",
+       "d": "10/27"
+      }
+     ]
+    },
+    {
+     "type": "table",
+     "title": "SMBC日本シリーズ2026 全試合",
+     "head": [
+      "戦",
+      "日付",
+      "球場",
+      "結果"
+     ],
+     "rows": [
+      [
+       "第1戦",
+       "10/24",
+       "横浜",
+       "DeNA 1-3 ソフトバンク"
+      ],
+      [
+       "第2戦",
+       "10/25",
+       "横浜",
+       "DeNA 3-4 ソフトバンク"
+      ],
+      [
+       "第3戦",
+       "10/27",
+       "福岡",
+       "DeNA 1-2 ソフトバンク（延長10回）"
+      ],
+      [
+       "第4戦",
+       "10/28",
+       "福岡",
+       "DeNA 2-4 ソフトバンク"
+      ]
+     ]
+    },
+    {
+     "type": "article",
+     "rank": "mid",
+     "kicker": "記録",
+     "h": "ポストシーズン11連勝で頂点",
+     "body": [
+      "ソフトバンクは今年のポストシーズンを一度も負けずに勝ち抜き、日本一までたどり着いた。"
+     ],
+     "src": [
+      {
+       "t": "ベースボールチャンネル",
+       "u": "https://www.baseballchannel.jp/npb/299056/",
+       "d": "10/28"
+      }
+     ]
+    },
+    {
+     "type": "article",
+     "rank": "mid",
+     "kicker": "経緯",
+     "h": "パ3連覇から日本一連覇へ",
+     "body": [
+      "ソフトバンクは9月17日にパ・リーグ3連覇を決めていた。対するDeNAはセ・リーグ3位からクライマックスシリーズを勝ち上がっての出場だった。"
+     ],
+     "src": [
+      {
+       "t": "共同通信（カナロコ）",
+       "u": "https://www.kanaloco.jp/sports/baseball/npb"
+      },
+      {
+       "t": "熊本日日新聞",
+       "u": "https://kumanichi.com/articles/2050069"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "tab": "テック",
+   "title": "AI・テック",
+   "blocks": [
+    {
+     "type": "article",
+     "rank": "top",
+     "kicker": "生成AI",
+     "h": "Gemini 4 Argon、深い作業向けの新モデル",
+     "sub": "10月14日にアプリとAPIで提供開始",
+     "lede": "Googleは、コーディングや金融、法務などの分野で高い性能をうたう新モデル「Gemini 4 Argon」を10月14日に公開した。",
+     "body": [
+      "Google AI StudioとGemini API、GeminiアプリのUltra・Proプランで利用できる。複雑で長い作業を最後までやり通す、いわゆるディープワーク向けの位置づけだ。"
+     ],
+     "src": [
+      {
+       "t": "Business Insider Japan",
+       "u": "https://www.businessinsider.jp/article/2610-how-much-did-major-generative-ai-service-fees/"
+      }
+     ]
+    },
+    {
+     "type": "article",
+     "rank": "sub",
+     "kicker": "OpenAI",
+     "h": "DevDayで新機能20以上",
+     "body": [
+      "9月29日の開発者向けイベントで、新モデル「GPT-6.1 Sol」が発表された。専用のクラウド環境で、アプリをまたいで働き続ける常時稼働のエージェント「dots」や、共同編集の「ChatGPT Space」も紹介された。"
+     ],
+     "src": [
+      {
+       "t": "Business Insider Japan",
+       "u": "https://www.businessinsider.jp/article/2610-how-much-did-major-generative-ai-service-fees/"
+      }
+     ]
+    },
+    {
+     "type": "article",
+     "rank": "mid",
+     "kicker": "Google",
+     "h": "「Gem」が「Skill」へ、11月から順次",
+     "body": [
+      "Geminiを自分用に調整する「Gem」が、後継の「Skill」に移行する。作ったタスクを自動化し、繰り返し使えるようにするのが狙いだ。"
+     ],
+     "src": [
+      {
+       "t": "Business Insider Japan",
+       "u": "https://www.businessinsider.jp/article/2610-how-much-did-major-generative-ai-service-fees/"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "tab": "カルチャー",
+   "title": "カルチャー",
+   "blocks": [
+    {
+     "type": "article",
+     "rank": "top",
+     "kicker": "ONE PIECE",
+     "h": "ハンコック、12年ぶりに本編へ",
+     "sub": "USJ「ワンピース・プレミアショー2026」は19日まで",
+     "lede": "ユニバーサル・スタジオ・ジャパンで上演中の「ワンピース・プレミアショー2026」で、ボア・ハンコックが12年ぶりにメインストーリーに戻ってきた。",
+     "body": [
+      "会場はウォーターワールドで、夜の18時45分開演。スモーカーやルッチも登場する。上演は11月19日まで。"
+     ],
+     "src": [
+      {
+       "t": "トラベル Watch",
+       "u": "https://travel.watch.impress.co.jp/docs/news/2129079.html"
+      }
+     ]
+    },
+    {
+     "type": "article",
+     "rank": "mid",
+     "kicker": "グッズ",
+     "h": "ヤマトがバックスのユニホーム姿に",
+     "body": [
+      "ヤマトがNBAミルウォーキー・バックスのユニホームを着たフィギュアになった。プレミアムバンダイで予約を受け付けていて、価格は16,500円（税込）、発送は2027年1月の予定。"
+     ],
+     "src": [
+      {
+       "t": "アニメ!アニメ!",
+       "u": "https://animeanime.jp/special/140/recent/%E3%83%AF%E3%83%B3%E3%83%94%E3%83%BC%E3%82%B9"
+      }
+     ]
+    },
+    {
+     "type": "article",
+     "rank": "mid",
+     "kicker": "ゲーム",
+     "h": "『メタファー』Switch 2版、12日発売",
+     "body": [
+      "6月のNintendo Directで発表された『Metaphor: ReFantazio』のNintendo Switch 2版が、11月12日に発売される。"
+     ],
+     "src": [
+      {
+       "t": "esports.gg",
+       "u": "https://esports.gg/guides/gaming/all-nintendo-direct-june-2026-announcements-reveals-and-trailers/"
+      }
+     ]
+    },
+    {
+     "type": "article",
+     "rank": "beta",
+     "label": "予想",
+     "h": "コミックス116巻は秋ごろか",
+     "body": [
+      "115巻は7月3日に発売された。3〜4か月ごとの刊行ペースから、次巻は10〜11月ごろと見られている。公式の発売日はまだ確認できていない。"
+     ],
+     "src": [
+      {
+       "t": "電撃オンライン",
+       "u": "https://dengekionline.com/article/202307/908"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "tab": "仕事・農",
+   "title": "仕事・農",
+   "blocks": [
+    {
+     "type": "article",
+     "rank": "top",
+     "kicker": "北海道",
+     "h": "農業の道へ、21日に新規就農フェア",
+     "sub": "道内の市町村などが出展",
+     "lede": "北海道庁は、新しく農業を始めたい人に向けた「新規就農フェア」を11月21日（土）に開く。",
+     "body": [
+      "道内の市町村などが出展し、就農の相談に応じる。同じ時期の道の資料では、農業体験バスツアーの参加者募集も始まっている。"
+     ],
+     "src": [
+      {
+       "t": "北海道庁 技術普及課",
+       "u": "https://www.pref.hokkaido.lg.jp/ns/gjf/docs/"
+      },
+      {
+       "t": "北海道庁 農業経営課",
+       "u": "https://www.pref.hokkaido.lg.jp/ns/kei/a0000/"
+      }
+     ]
+    },
+    {
+     "type": "article",
+     "rank": "mid",
+     "kicker": "制度",
+     "h": "農業近代化資金を拡充",
+     "body": [
+      "道の農業経営課が、10月1日からの農業近代化資金の拡充を10月5日付で案内している。中身は道の案内ページで確認できる。"
+     ],
+     "src": [
+      {
+       "t": "北海道庁 農業経営課",
+       "u": "https://www.pref.hokkaido.lg.jp/ns/kei/a0000/"
+      }
+     ]
+    },
+    {
+     "type": "article",
+     "rank": "mid",
+     "kicker": "会計・税",
+     "h": "10月以降のインボイス制度、要点を整理",
+     "body": [
+      "アクタス税理士法人が、令和8年10月以降のインボイス制度のポイントをニュースレターにまとめた。変更点を確かめる入口になる。"
+     ],
+     "src": [
+      {
+       "t": "税務・会計プレスリリース",
+       "u": "https://www.zeiken.co.jp/zeikenpress/category/seminar/%E8%AA%AC%E6%98%8E%E4%BC%9A%EF%BC%8F%E3%82%BB%E3%83%9F%E3%83%8A%E3%83%BC/"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "tab": "世界",
+   "title": "世界・ことば",
+   "blocks": [
+    {
+     "type": "article",
+     "rank": "top",
+     "kicker": "ベルギー",
+     "h": "KANAL、ブリュッセルで年末に開館へ",
+     "sub": "文化の街としての顔を強める",
+     "lede": "ブリュッセルの運河沿いで、旧工場を改装した現代美術館「KANAL-ポンピドゥー・センター」の開館が年末に予定されている。",
+     "body": [
+      "Euronewsは2026年のおすすめの旅行先にブリュッセルを挙げ、その理由の一つにこの美術館を紹介した。乗り継ぎで通り過ぎる街から、目的地になる街へ、という印象の変化にも触れている。"
+     ],
+     "src": [
+      {
+       "t": "Euronews",
+       "u": "https://euronews.com/2025/12/29/peak-northern-lights-and-stunning-hikes-the-unmissable-european-places-to-visit-in-2026"
+      }
+     ]
+    },
+    {
+     "type": "words",
+     "title": "きょうのフランス語",
+     "rows": [
+      [
+       "Bonne journée !",
+       "ボンヌ ジュルネ",
+       "よい一日を。別れ際の定番。"
+      ],
+      [
+       "Ça m'a fait plaisir.",
+       "サ マ フェ プレジール",
+       "会えてうれしかった。"
+      ],
+      [
+       "On se rappelle bientôt ?",
+       "オン ス ラペル ビヤント",
+       "近いうちにまた電話しよう？"
+      ]
+     ]
+    },
+    {
+     "type": "note",
+     "title": "編集後記",
+     "body": [
+      "題字を「明日葉新聞」とし、紙面を本物の新聞と同じ段組みに作り直しました。記事は段を下へ流れ、見出しは段をまたいで立ちます。",
+      "きょうの号は試し刷りです。あすの朝5時からは1面あたり8本以上、5,000字を超える紙面を目標にします。気になる記事や要望は、紙面へのコメントでどうぞ。"
+     ]
+    }
+   ]
+  },
+  {
+   "tab": "くらし",
+   "title": "くらし・あそび",
+   "blocks": [
+    {
+     "type": "comic",
+     "title": "あしたばくん",
+     "no": "第1回",
+     "panels": [
+      {
+       "bg": "office",
+       "cast": [
+        {
+         "who": "neko",
+         "face": "normal"
+        },
+        {
+         "who": "ashi",
+         "face": "smile"
+        }
+       ],
+       "say": [
+        {
+         "who": "neko",
+         "text": "うちの新聞は朝5時にできる"
+        },
+        {
+         "who": "ashi",
+         "text": "早起きですね"
+        }
+       ]
+      },
+      {
+       "bg": "office",
+       "cast": [
+        {
+         "who": "ashi",
+         "face": "think"
+        }
+       ],
+       "say": [
+        {
+         "who": "ashi",
+         "text": "でも作ってるのはAIですよね"
+        }
+       ]
+      },
+      {
+       "bg": "night",
+       "cast": [
+        {
+         "who": "neko",
+         "face": "sweat"
+        },
+        {
+         "who": "ashi",
+         "face": "surprise"
+        }
+       ],
+       "say": [
+        {
+         "who": "neko",
+         "text": "わしも徹夜で見守っとる"
+        },
+        {
+         "who": "ashi",
+         "text": "えっ"
+        }
+       ]
+      },
+      {
+       "bg": "room",
+       "cast": [
+        {
+         "who": "neko",
+         "face": "sleepy",
+         "x": 0.5
+        }
+       ],
+       "say": [
+        {
+         "who": "neko",
+         "text": "…朝刊はまだかね"
+        }
+       ],
+       "cap": "午前5時"
+      }
+     ]
+    },
+    {
+     "type": "sudoku"
+    },
+    {
+     "type": "agenda",
+     "title": "近く開かれる催し",
+     "rows": [
+      [
+       "11月12日",
+       "『メタファー：リファンタジオ』Switch 2版発売"
+      ],
+      [
+       "11月19日",
+       "USJ「ワンピース・プレミアショー2026」最終日"
+      ],
+      [
+       "11月21日",
+       "北海道 新規就農フェア"
+      ],
+      [
+       "年末",
+       "ブリュッセル KANAL-ポンピドゥー・センター開館予定"
+      ]
+     ]
+    },
+    {
+     "type": "haiku",
+     "title": "きょうの一句",
+     "text": "柿くへば鐘が鳴るなり法隆寺",
+     "by": "正岡子規",
+     "note": "秋の旅の途中、奈良で詠んだ句。柿のうまさと鐘の音が一つになる。"
+    }
+   ]
+  }
+ ]
+}

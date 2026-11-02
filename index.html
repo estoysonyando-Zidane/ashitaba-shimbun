@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex, notranslate">
+<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="bingbot" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="referrer" content="no-referrer">
+<meta name="format-detection" content="telephone=no">
+<meta name="theme-color" content="#2a2924">
+<title>明日葉新聞</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%23ECE8DA'/%3E%3Cpath d='M50 86V50' stroke='%231A1A18' stroke-width='6'/%3E%3Cpath d='M50 58q-28-6-32-32q26 2 32 32z' fill='%233F6B35'/%3E%3Cpath d='M50 50q20-18 36-16q-6 24-36 16z' fill='%233F6B35'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;600;800&family=Noto+Serif+JP:wght@400;600;700&family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Yuji+Syuku&display=swap&text=%E6%98%8E%E6%97%A5%E8%91%89%E6%96%B0%E8%81%9E">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="bar">
+  <div class="brand"><b>明日葉新聞</b><span id="dt"></span></div>
+  <div class="tools">
+    <select id="back" aria-label="バックナンバー"></select>
+    <button id="lst" type="button">記事一覧</button>
+    <span class="zoom"><button id="zo" type="button" aria-label="縮小">－</button><span id="zl">100%</span><button id="zi" type="button" aria-label="拡大">＋</button><button id="zw" type="button">幅</button><button id="zp" type="button">全体</button></span>
+  </div>
+</header>
+<nav class="tabs" id="tabs" aria-label="面"></nav>
+<main id="stage" class="stage"></main>
+<footer class="nav"><button id="prev" type="button">前の面 →</button><span id="pos"></span><button id="next" type="button">← 次の面</button></footer>
+
+<dialog id="reader" class="rd"><div class="rhead"><button id="rnext" type="button">次の記事 →</button><span id="rpos"></span><button id="rprev" type="button">← 前の記事</button><button id="rtate" type="button">縦／横</button><button class="close" type="button" aria-label="閉じる">閉じる</button></div><div id="rbody" class="rbody"></div></dialog>
+<dialog id="listv" class="rd"><div class="rhead"><b>記事一覧</b><button class="close" type="button">閉じる</button></div><div id="lbody" class="lbody"></div></dialog>
+<div id="print" class="print"></div>
+<script type="module" src="assets/app.js"></script>
+</body>
+</html>
