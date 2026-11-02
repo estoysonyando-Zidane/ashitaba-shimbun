@@ -19,14 +19,18 @@ let uid = 0;
 function flow(o){ return prepareFlow(Object.assign({ kind: 'flow', id: 'f' + (++uid) }, o)); }
 
 // Convert a page's blocks into layout items (+ page-level things such as ads).
-export function itemsFor(pg, pageIdx, ed){
+// compact: when a section would spill onto a nearly empty continuation page, headlines below the top story
+// go down one size (sub→mid, mid→beta) so the whole section fits on its own page, as a real desk would do.
+const DEMOTE = { sub: 'mid', mid: 'beta' };
+export function itemsFor(pg, pageIdx, ed, compact = 0){
   const items = []; let ads = null;
   arr(pg.blocks).forEach((b, bi) => {
     const src = arr(b.src);
     switch (b.type){
       case 'lead': case 'item': case 'article': {
         const rank = b.rank || (b.type === 'lead' ? 'top' : 'mid');
-        items.push(flow({ rank, kicker: b.kicker, label: b.label, h: b.h, sub: b.sub, lede: b.lede, paras: arr(b.body), credit: creditOf(src), src, fig: figOf(b.fig), banner: !!b.banner, block: b }));
+        let rk = rank; for (let k = 0; k < compact; k++) rk = DEMOTE[rk] || rk;
+        items.push(flow({ rank: rk, kicker: b.kicker, label: b.label, h: b.h, sub: rk === 'top' || rk === 'sub' ? b.sub : null, lede: b.lede, paras: arr(b.body), credit: creditOf(src), src, fig: figOf(b.fig), banner: !!b.banner, block: b }));
         break;
       }
       case 'briefs': items.push(flow({ rank: 'box', frame: 'tatami', h: b.title || '短信', indent: false, paras: arr(b.items).map(x => `◆${x.h}　${x.body}${x.src && x.src.length ? '（' + creditOf(x.src) + '）' : ''}`), src: arr(b.items).flatMap(x => arr(x.src)), block: b })); break;
@@ -141,10 +145,14 @@ export function buildEdition(ed, opt = {}){
     // Ads are the elastic part of a real page: try the planned band and its neighbours, keep the best fit.
     const opts = pg.adRows != null ? [plan] : [...new Set([plan, 4, 2, 0])].filter(a => !(pg.tab === 'きょうの歴史' && a));
     let best = null;
-    for (const a of opts){
-      const R = S.rows - a; const pages = gridPages(items, R, seed, isFront ? MAST_COLS : 0, tries);
-      const score = pages.length * 25 + pages.reduce((x, p) => x + (p.pen || 0), 0) + (a === plan ? 0 : 1.5) + (isFront && a < 2 ? 3 : 0);
-      if (!best || score < best.score) best = { score, pages, a, R };
+    for (let compact = 0; compact <= 1; compact++){
+      const its = compact ? itemsFor(pg, pi, ed, compact).items : items;
+      for (const a of opts){
+        const R = S.rows - a; const pages = gridPages(its, R, seed, isFront ? MAST_COLS : 0, tries);
+        const score = pages.length * 25 + pages.reduce((x, p) => x + (p.pen || 0), 0) + (a === plan ? 0 : 1.5) + (isFront && a < 2 ? 3 : 0) + compact * 6;
+        if (!best || score < best.score) best = { score, pages, a, R };
+      }
+      if (best.pages.length === 1) break;
     }
     best.pages.forEach((p, k) => {
       out.push({ tab: pg.tab, title: pg.title || pg.tab, cont: k > 0, adRows: best.a, R: best.R, placed: p.placed, pinned: p.pinned, pockets: p.pockets, grid: p.grid, pen: p.pen, dropped: p.dropped || [], front: isFront && k === 0, ads: k === 0 ? ads : null, srcPage: pi });
