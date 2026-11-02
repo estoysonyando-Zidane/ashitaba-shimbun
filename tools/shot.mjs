@@ -1,5 +1,6 @@
 // node tools/shot.mjs [YYYY-MM-DD] [outdir] — screenshots every page (desktop + phone) from a local server.
-import http from 'http'; import fs from 'fs'; import path from 'path'; import { chromium } from 'playwright';
+import http from 'http'; import fs from 'fs'; import path from 'path'; import { createRequire } from 'module';
+const { chromium } = createRequire(import.meta.url)('playwright'); // resolves the preinstalled copy via NODE_PATH
 const root = path.resolve(new URL('..', import.meta.url).pathname); const date = process.argv[2] || ''; const out = process.argv[3] || '/tmp/ashitaba-shots';
 fs.mkdirSync(out, { recursive: true });
 const types = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.txt': 'text/plain' };
