@@ -98,7 +98,7 @@ function drawFixed(sheet, pl, page, ed){
 function drawFiller(sheet, pl, page, n){
   const w = pl.x1 - pl.x0, k = pl.r1 - pl.r0, h = k * S.P - S.gap;
   const cols = Math.max(1, Math.min(3, Math.round(w / 420))), rws = Math.max(1, Math.min(3, Math.round(h / 520)));
-  const ads = pickAds(page.info.key, cols * rws, page.no * 13 + n);
+  const ads = freshAds(page, cols * rws, page.no * 13 + n);
   const cw = (w - 8 * (cols + 1)) / cols, ch = (h - 8 * (rws + 1)) / rws;
   let q = 0;
   for (let i = 0; i < cols; i++) for (let j = 0; j < rws; j++){ const a = adBox(ads[q++ % ads.length], cw, ch); a.style.left = (X(pl.x1) - (i + 1) * (cw + 8)) + 'px'; a.style.top = (Y(pl.r0) + 8 + j * (ch + 8)) + 'px'; a.classList.add('filler'); sheet.append(a); }
@@ -128,12 +128,20 @@ function drawMast(sheet, page, ed, onIndex){
 function findWeather(ed){ for (const pg of ed.pages || []) for (const b of pg.blocks || []) if (b.type === 'weather' && b.items && b.items[0]) return b; return null; }
 
 /* ---------------- ad band ---------------- */
+// Never show the same ad twice on one page.
+function freshAds(page, n, salt){
+  page._usedAds = page._usedAds || new Set();
+  const all = pickAds(page.info.key, 12, salt); const out = [];
+  for (const a of all){ if (out.length >= n) break; if (!page._usedAds.has(a.cp)){ out.push(a); page._usedAds.add(a.cp); } }
+  while (out.length < n) out.push(all[out.length % all.length]);
+  return out;
+}
 function drawAds(sheet, page){
   if (!page.adRows) return;
   const y = Y(page.R), h = page.adRows * S.P - S.gap; const W = S.CW;
   const band = el('div', 'adband'); band.style.left = X(0) + 'px'; band.style.top = (y - 4) + 'px'; band.style.width = W + 'px'; band.style.height = (h + 4) + 'px'; sheet.append(band);
   const n = page.adRows >= 4 ? 3 : page.adRows === 3 ? 4 : 5;
-  const list = (page.ads && page.ads.length ? page.ads : []).concat(pickAds(page.info.key, n, page.no)).slice(0, n);
+  const list = (page.ads && page.ads.length ? page.ads : []).concat(freshAds(page, n, page.no)).slice(0, n);
   // 三八つ-style book strip on 3段 bands
   let xr = X(W); const gap = 8;
   const weights = list.map((a, i) => (i === 0 ? 1.5 : 1));
@@ -143,7 +151,7 @@ function drawAds(sheet, page){
 
 /* ---------------- page ---------------- */
 export function drawPage(page, ed, hooks = {}){
-  const sheet = el('div', 'sheet'); sheet.style.width = S.W + 'px'; sheet.style.height = S.H + 'px';
+  const sheet = el('div', 'sheet'); sheet.style.width = S.W + 'px'; sheet.style.height = S.H + 'px'; page._usedAds = new Set();
   sheet.dataset.no = page.no;
   // 柱
   const inf = page.info;
