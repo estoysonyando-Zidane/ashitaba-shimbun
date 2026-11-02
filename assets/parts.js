@@ -155,8 +155,8 @@ export function adBox(a, w, h){
   d.style.width = w + 'px'; d.style.height = h + 'px';
   d.append(el('span', 'lab', a.kind === 'fiction' ? '架空広告' : a.kind === 'self' ? '自社広告' : '広告'));
   if (a.who) d.append(el('div', 'who', a.who));
-  const cp = el('div', 'cp', a.cp); const big = Math.max(17, Math.min(40, Math.sqrt(w * h) / 11)); cp.style.fontSize = big + 'px'; d.append(cp);
-  if (a.body) d.append(el('div', 'bdy', a.body));
+  const cp = el('div', 'cp', a.cp); const big = Math.max(15, Math.min(40, Math.sqrt(w * h) / 11, (vertical ? w : h) / 5.2)); cp.style.fontSize = big + 'px'; d.append(cp);
+  if (a.body && (vertical ? w : h) > 150) d.append(el('div', 'bdy', a.body));
   if (a.ft) d.append(el('div', 'ft', a.ft));
   return d;
 }

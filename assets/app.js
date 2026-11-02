@@ -72,7 +72,7 @@ function fit(){
 function zoomBy(f){ state.zoom = 'free'; state.z = state.z * f; fit(); }
 
 /* ---------------- reader ---------------- */
-function allArticles(){ const out = []; state.built.pages.forEach((p, pi) => p.placed.forEach(pl => { if (pl.it.kind === 'flow') out.push({ it: pl.it, page: p }); })); return out; }
+function allArticles(){ const out = []; state.built.pages.forEach((p) => p.placed.concat(p.pinned || []).forEach(pl => { if (pl.it.kind === 'flow') out.push({ it: pl.it, page: p }); })); return out; }
 function reader(it){
   const list = allArticles(); let idx = list.findIndex(x => x.it === it); if (idx < 0) idx = 0;
   const dlg = $('#reader');
@@ -97,7 +97,7 @@ function reader(it){
 function listView(){
   const dlg = $('#listv'); const b = $('#lbody'); b.replaceChildren();
   state.built.pages.forEach((p) => {
-    const arts = p.placed.filter(pl => pl.it.kind === 'flow' && pl.it.h); if (!arts.length) return;
+    const arts = p.placed.concat(p.pinned || []).filter(pl => pl.it.kind === 'flow' && pl.it.h); if (!arts.length) return;
     b.append(el('h3', null, `${p.no}面　${p.title}${p.cont ? '（続き）' : ''}`));
     arts.forEach(pl => { const a = el('button', 'li'); a.type = 'button'; a.append(el('b', null, pl.it.h.replace(/／/g, '')), el('span', null, (pl.it.lede || (pl.it.paras || [])[0] || '').slice(0, 60) + '…')); a.addEventListener('click', () => { dlg.close(); reader(pl.it); }); b.append(a); });
   });

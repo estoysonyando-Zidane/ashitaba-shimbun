@@ -1,7 +1,6 @@
 // node tools/check.mjs editions/YYYY-MM-DD.json  — validates an edition and its layout. Exit 1 on NG.
 import fs from 'fs';
 import { buildEdition } from '../assets/paper.js';
-import { S, slotsFor } from '../assets/layout.js';
 
 const file = process.argv[2]; if (!file){ console.error('usage: node tools/check.mjs editions/DATE.json'); process.exit(2); }
 const ed = JSON.parse(fs.readFileSync(file, 'utf8'));
@@ -40,18 +39,14 @@ if (total < 30000) ng.push(`合計字数 ${total}（30,000字以上）`);
 
 // ---- layout check: same engine as the viewer
 const out = buildEdition(ed);
-let fillTotal = 0;
 out.pages.forEach(pg => {
-  const area = S.CW * pg.R * S.P; let fill = 0, naki = 0, over = 0;
-  pg.placed.forEach(pl => {
-    if (pl.it.kind === 'filler') fill += (pl.x1 - pl.x0) * (pl.r1 - pl.r0) * S.P;
-    if (pl.it.kind === 'flow'){ naki += pl.naki || 0; if (slotsFor(pl.it, pl.r1 - pl.r0, pl.x1 - pl.x0) < pl.it.lines.length) over++; }
-  });
-  if (pg.dropped && pg.dropped.length) ng.push(`${pg.no}面: 入りきらない記事 ${pg.dropped.map(d => d.h).join('、')}`);
-  if (over) ng.push(`${pg.no}面: 枠からあふれる記事 ${over}本`);
-  const fr = fill / area; fillTotal += fr;
-  if (fr > .2) warn.push(`${pg.no}面 ${pg.tab}: 穴埋め広告が ${Math.round(fr * 100)}%（記事を足すか短信で埋める）`);
-  console.log(`紙面 ${String(pg.no).padStart(2)} ${pg.tab}${pg.cont ? '（続）' : ''}\t記事${pg.placed.filter(p => p.it.kind === 'flow').length} 広告${pg.adRows}段 穴埋め${Math.round(fr * 100)}% 泣き別れ${naki} 評価${(pg.pen || 0).toFixed(1)}`);
+  const C = pg.grid ? pg.grid[0].length : 1; const area = C * pg.R; let fill = 0, tiny = 0, naki = 0;
+  (pg.pockets || []).forEach(pk => { const a = (pk.r1 - pk.r0) * (pk.c1 - pk.c0); if (pk.c1 - pk.c0 < 5) tiny += a; else fill += a; });
+  pg.placed.forEach(pl => { naki += pl.naki || 0; });
+  if (pg.dropped && pg.dropped.length) ng.push(`${pg.no}面: 入りきらない記事 ${pg.dropped.map(d => d.h || d.type).join('、')}`);
+  const fr = fill / area;
+  if (fr > .15) warn.push(`${pg.no}面 ${pg.tab}: 余白の突き出し広告が ${Math.round(fr * 100)}%（記事か短信を足す）`);
+  console.log(`紙面 ${String(pg.no).padStart(2)} ${pg.tab}${pg.cont ? '（続）' : ''}\t記事${pg.placed.length} ハコ${(pg.pinned || []).length} 広告${pg.adRows}段 穴埋め${Math.round(fr * 100)}% 端切れ${tiny}行 泣き別れ${naki} 評価${(pg.pen || 0).toFixed(1)}`);
 });
 console.log(`紙面数 ${out.pages.length}`);
 if (warn.length) console.log('\n要確認:\n- ' + warn.join('\n- '));

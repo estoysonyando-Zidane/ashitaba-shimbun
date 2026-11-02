@@ -208,7 +208,7 @@ export function hash(str){ let h = 2166136261; for (const ch of String(str)) { h
 
 /* ------------------------------------------------------------------ page layout --------------- */
 // Item widths for k rows, generic over kinds.
-function iw(it, k){
+export function iw(it, k){
   if (it.kind === 'flow') return widthFor(it, k);
   if (it.kind === 'fixed') return fixedW(it, k);
   if (it.kind === 'yoko'){ const h = k * S.P - S.gap; let lo = it.minW || 180, hi = it.maxW || 1400; if (yokoH(it, hi) > h) return Infinity; while (hi - lo > 4){ const m = (lo + hi) / 2; if (yokoH(it, m) <= h) hi = m; else lo = m; } return Math.ceil(hi); }

@@ -1,6 +1,7 @@
 // 明日葉新聞 — draws a laid-out page onto a fixed-size sheet (DOM, absolute positioning in sheet px).
 import { S, HEAD, tokenize, normalize, fixedW } from './layout.js';
 import { PAPER, MAST_W } from './paper.js';
+import { COLS } from './grid.js';
 import { el, svg, comic, sudoku, figure, wxIcon, adBox, pickAds, illust } from './parts.js';
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -78,6 +79,64 @@ function drawFlow(sheet, pl, page, onOpen){
   }
 }
 
+/* ---------------- poured stories ---------------- */
+const CX = (c) => X(c * S.lp);              // left edge of line-column c
+function drawStory(sheet, pl, page, onOpen){
+  const it = pl.it, gc = pl.gc; const open = () => onOpen && onOpen(it);
+  const top = Y(pl.r0), hh = gc.hn * S.P - S.gap;
+  const grp = el('div', 'story r-' + it.rank + (page.tab === 'スポーツ' ? ' sp' : '')); grp.dataset.id = it.id; sheet.append(grp);
+  grp.addEventListener('click', open);
+  // headline block at the story's top right
+  let hx = CX(pl.c0 + 1) - 3;
+  it.head.parts.forEach(p => {
+    const colW = p.w / p.cols.length;
+    p.cols.forEach(col => {
+      hx -= colW;
+      const cls = `hd hd-${p.t} hf-${(HEAD[it.rank] || HEAD.mid).font}` + (p.t === 'main' && it.rank === 'top' && page.idx % 3 === 1 ? ' shiro' : '') + (p.t === 'main' && it.rank === 'sub' && page.idx % 2 === 0 ? ' chimon' : '');
+      const t = p.t === 'sub' ? top + hh * .06 : top;
+      const d = vtext(grp, hx, t, col, p.size, p.t === 'kick' ? Math.min(hh, (col.length + 1) * p.size * S.H_SCALE) : hh * (p.t === 'sub' ? .92 : 1), cls, colW);
+    });
+  });
+  if (it.label){ const lb = el('div', 'lbl', it.label); lb.style.left = (CX(pl.c0 + 1) - 22) + 'px'; lb.style.top = (top + hh - 64) + 'px'; grp.append(lb); }
+  // lede (通し組み, boxed) just left of the headline
+  if (gc.lc){
+    const lx1 = CX(pl.c0 - gc.hc + 1); const lw = gc.lc * S.lp;
+    const lb = el('div', 'ledebox'); lb.style.left = (lx1 - lw + 4) + 'px'; lb.style.top = top + 'px'; lb.style.width = (lw - 8) + 'px'; lb.style.height = hh + 'px'; grp.append(lb);
+    it.ledeLines.forEach((ln, j) => vline(grp, lx1 - 10 - (j + 1) * it.lede_lp, top + 6, ln.u, it.lede_per, it.lede_c, 'lede', !ln.end));
+  }
+  // figure at the story's left end, top 段
+  if (gc.fc){ const f = figure(it.fig, gc.fc * S.lp - 8, gc.fn * S.P - S.gap); f.style.left = (CX(pl.cl) + 2) + 'px'; f.style.top = top + 'px'; grp.append(f); }
+  // body lines exactly where the layout poured them
+  pl.lines.forEach(L => { const ln = it.lines[L.i]; vline(grp, CX(L.c), Y(L.r), ln.u, S.L, S.c, null, !ln.end); });
+}
+/* rules: drawn wherever two different owners meet, so they jog with the stories */
+function drawRules(sheet, page){
+  const g = page.grid; if (!g) return;
+  const R = g.length, C = g[0].length;
+  const own = g.map(row => row.slice());
+  (page.pockets || []).forEach((pk, k) => { for (let r = pk.r0; r < pk.r1; r++) for (let c = pk.c0; c < pk.c1; c++) own[r][c] = 'p' + k; });
+  const box = el('div', 'rules'); box.style.left = '0px'; box.style.top = '0px'; sheet.append(box);
+  const seg = (x, y, w, h) => { const d = el('i'); d.style.left = x + 'px'; d.style.top = y + 'px'; d.style.width = w + 'px'; d.style.height = h + 'px'; box.append(d); };
+  // vertical seams inside each 段 (merged down through consecutive 段)
+  for (let c = 0; c < C - 1; c++){
+    let start = -1;
+    for (let r = 0; r <= R; r++){
+      const diff = r < R && own[r][c] !== own[r][c + 1];
+      if (diff && start < 0) start = r;
+      if (!diff && start >= 0){ const y0 = Y(start) - (start ? S.gap / 2 : 0), y1 = Y(r) - S.gap / 2; seg(CX(c + 1) - .5, y0, 1, y1 - y0); start = -1; }
+    }
+  }
+  // horizontal seams in the 段間
+  for (let r = 0; r < R - 1; r++){
+    let start = -1;
+    for (let c = 0; c <= C; c++){
+      const diff = c < C && own[r][c] !== own[r + 1][c];
+      if (diff && start < 0) start = c;
+      if (!diff && start >= 0){ seg(CX(start), Y(r + 1) - S.gap / 2 - .5, (c - start) * S.lp, 1); start = -1; }
+    }
+  }
+}
+
 /* ---------------- horizontal boxes ---------------- */
 function drawYoko(sheet, pl){
   const it = pl.it, b = it.block; const k = pl.r1 - pl.r0;
@@ -106,7 +165,7 @@ function drawFiller(sheet, pl, page, n){
 
 /* ---------------- masthead strip (front page) ---------------- */
 function drawMast(sheet, page, ed, onIndex){
-  const x1 = X(S.CW), x0 = x1 - MAST_W, R = page.R;
+  const x1 = X(COLS * S.lp), x0 = x1 - MAST_W, R = page.R;
   const box = el('div', 'mast'); box.style.left = x0 + 'px'; box.style.top = S.MT + 'px'; box.style.width = MAST_W + 'px'; box.style.height = (R * S.P - S.gap) + 'px';
   const dj = el('div', 'daiji'); dj.style.height = (4 * S.P - S.gap) + 'px';
   dj.append(svg(`<svg class="chimon" viewBox="0 0 100 300" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><g fill="currentColor">${Array.from({ length: 14 }, (_, i) => { const y = 10 + i * 21, x = (i % 2) ? 70 : 30; return `<path d="M${x} ${y} q12 -10 22 2 q-12 9 -22 -2z M${x} ${y} q-12 -10 -22 2 q12 9 22 -2z"/>`; }).join('')}</g></svg>`));
@@ -164,13 +223,19 @@ export function drawPage(page, ed, hooks = {}){
     drawMast(sheet, page, ed, hooks.onIndex);
   }
   let fillN = 0;
-  page.placed.forEach(pl => {
-    const k = pl.it.kind;
+  // pinned boxes (タタミ・カコミ・コラム・4コマ…): rectangles in cells → sheet px
+  (page.pinned || []).forEach(b => {
+    const pl = { it: b.it, x0: b.c0 * S.lp, x1: b.c1 * S.lp, r0: b.r0, r1: b.r1 };
+    const k = b.it.kind;
     if (k === 'flow') drawFlow(sheet, pl, page, hooks.onOpen);
     else if (k === 'yoko') drawYoko(sheet, pl);
     else if (k === 'fixed') drawFixed(sheet, pl, page, ed);
-    else if (k === 'filler') drawFiller(sheet, pl, page, fillN++);
   });
+  // poured stories (L- and stair-shaped)
+  page.placed.forEach(pl => drawStory(sheet, pl, page, hooks.onOpen));
+  // leftover pockets: 突き出し-style small ads
+  (page.pockets || []).forEach(pk => { if (pk.c1 - pk.c0 >= 5) drawFiller(sheet, { x0: pk.c0 * S.lp, x1: pk.c1 * S.lp, r0: pk.r0, r1: pk.r1 }, page, fillN++); });
+  drawRules(sheet, page);
   drawAds(sheet, page);
   const ft = el('div', 'sfoot'); ft.style.left = X(0) + 'px'; ft.style.width = S.CW + 'px'; ft.style.top = (S.H - S.MB + 14) + 'px';
   ft.textContent = `― ${page.no} ―　${PAPER.name}　${inf.short}　私的な趣味で作成した紙面で、報道機関の記事ではありません。記事をタップすると全文と出典を読めます。`;

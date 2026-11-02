@@ -55,8 +55,11 @@ button:disabled{opacity:.35;cursor:default}
 .lbl{font:900 13px/1 var(--f-got);color:var(--paper);background:var(--red);padding:4px 3px;writing-mode:vertical-rl;letter-spacing:.1em}
 .ledebox{border:1px solid var(--ink);background:rgba(255,255,255,.18)}
 .it{cursor:pointer}
-.it.flow::before{content:"";position:absolute;left:-.5px;top:0;bottom:0;border-left:1px solid var(--rule)}
-.it.flow::after{content:"";position:absolute;left:0;right:0;bottom:-7.5px;border-bottom:1px solid var(--rule)}
+.story{position:absolute;left:0;top:0;width:0;height:0;cursor:pointer}
+.story > *{position:absolute}
+.story:hover .vl{color:#000}
+.rules{position:absolute;width:0;height:0;pointer-events:none}
+.rules i{position:absolute;background:var(--rule);display:block;box-shadow:0 0 0 .4px var(--rule)}
 .it.flow:hover{background:rgba(163,31,23,.035)}
 .fr-kakomi{outline:3px double var(--ink);outline-offset:-5px}
 .fr-tatami{box-shadow:inset -3px 0 0 var(--ink)}

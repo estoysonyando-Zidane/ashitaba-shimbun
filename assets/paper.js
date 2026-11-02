@@ -1,8 +1,10 @@
 // 明日葉新聞 — turns an edition (JSON) into laid-out pages. Pure; shared by the viewer and tools.
-import { S, prepareFlow, layoutRegion, widthFor, hash, rng, normalize } from './layout.js';
+import { S, prepareFlow, widthFor, hash, rng, normalize } from './layout.js';
+import { layoutGrid, COLS } from './grid.js';
 
 export const PAPER = { name: '明日葉新聞', kana: 'あしたばしんぶん', company: '明日葉新聞社', motto: '摘んでも、明日また芽吹く。', column: '芽吹き' };
-export const MAST_W = 236;
+export const MAST_COLS = 11;
+export const MAST_W = MAST_COLS * S.lp;
 
 export function dateInfo(ed){
   const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(ed.iso || '');
@@ -109,28 +111,43 @@ function paginateGreedy(items, W, R, seed, x1, final){
   return { pages, rest };
 }
 
-// Build the whole edition. Returns {info, pages:[{tab,title,cont,no,adRows,R,placed,ads,mast}]}
-export function buildEdition(ed){
+// Split a section's items into stories (poured) and boxes (pinned), and lay out as many pages as needed.
+const STORY = new Set(['top', 'sub', 'mid', 'beta']);
+function gridPages(items, R, seed, mastCols, tries){
+  const isStory = (it) => it.kind === 'flow' && STORY.has(it.rank);
+  let s = items.filter(isStory), b = items.filter(it => !isStory(it));
+  const pages = []; let guard = 0;
+  while ((s.length || b.length) && guard++ < 8){
+    const res = layoutGrid(s, b, R, { seed: seed + guard * 131, mastCols: pages.length === 0 ? mastCols : 0, tries });
+    const progressed = res && (res.placed.length || res.pinned.length);
+    if (!progressed){ pages.push({ placed: [], pinned: [], pockets: [], grid: null, pen: 99, dropped: s.concat(b) }); break; }
+    pages.push(res);
+    s = res.rest.filter(isStory); b = res.rest.filter(it => !isStory(it));
+  }
+  if (!pages.length) pages.push({ placed: [], pinned: [], pockets: [], grid: null, pen: 0 });
+  return pages;
+}
+
+// Build the whole edition. Returns {info, pages:[{tab,title,cont,no,adRows,R,placed,pinned,pockets,grid,ads}]}
+export function buildEdition(ed, opt = {}){
   uid = 0;
   const info = dateInfo(ed); const out = [];
+  const tries = opt.tries || 260;
   (ed.pages || []).forEach((pg, pi) => {
     const { items, ads } = itemsFor(pg, pi, ed);
-    let adRows = adRowsFor(out.length, pg);
     const isFront = pi === 0;
-    const W = isFront ? S.CW - MAST_W - 12 : S.CW;
-    let R = S.rows - adRows;
+    const plan = adRowsFor(out.length, pg);
     const seed = info.key * 97 + pi * 1009;
     // Ads are the elastic part of a real page: try the planned band and its neighbours, keep the best fit.
-    const plan = adRows; const opts = pg.adRows != null ? [plan] : [...new Set([plan, 4, 3, 2, 0])].filter(a => !(pg.tab === 'きょうの歴史' && a));
+    const opts = pg.adRows != null ? [plan] : [...new Set([plan, 4, 2, 0])].filter(a => !(pg.tab === 'きょうの歴史' && a));
     let best = null;
     for (const a of opts){
-      const r = S.rows - a; const pages = !items.length ? [{ placed: [], pen: 0 }] : isFront ? paginateGreedy(items, W, r, seed, W, true).pages : paginate(items, W, r, seed, W);
-      const score = pages.length * 30 + pages.reduce((s, p) => s + (p.pen || 0), 0) + (a === plan ? 0 : 1.5) + (isFront && a < 3 ? 3 : 0);
-      if (!best || score < best.score) best = { score, pages, a, r };
+      const R = S.rows - a; const pages = gridPages(items, R, seed, isFront ? MAST_COLS : 0, tries);
+      const score = pages.length * 25 + pages.reduce((x, p) => x + (p.pen || 0), 0) + (a === plan ? 0 : 1.5) + (isFront && a < 2 ? 3 : 0);
+      if (!best || score < best.score) best = { score, pages, a, R };
     }
-    adRows = best.a; R = best.r; const pages = best.pages;
-    pages.forEach((p, k) => {
-      out.push({ tab: pg.tab, title: pg.title || pg.tab, cont: k > 0, adRows, R, placed: p.placed, pen: p.pen, dropped: p.dropped || [], front: isFront && k === 0, ads: k === 0 ? ads : null, srcPage: pi });
+    best.pages.forEach((p, k) => {
+      out.push({ tab: pg.tab, title: pg.title || pg.tab, cont: k > 0, adRows: best.a, R: best.R, placed: p.placed, pinned: p.pinned, pockets: p.pockets, grid: p.grid, pen: p.pen, dropped: p.dropped || [], front: isFront && k === 0, ads: k === 0 ? ads : null, srcPage: pi });
     });
   });
   out.forEach((p, i) => { p.no = i + 1; });
